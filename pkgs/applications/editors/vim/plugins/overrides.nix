@@ -427,6 +427,11 @@
     dependencies = with self; [ plenary-nvim ];
   };
 
+  compiler-nvim = super.compiler-nvim.overrideAttrs {
+    dependencies = [ self.overseer-nvim ];
+    nvimRequireCheck = "compiler";
+  };
+
   completion-buffers = super.completion-buffers.overrideAttrs {
     dependencies = with self; [ completion-nvim ];
   };
@@ -1084,7 +1089,7 @@
         inherit (old) version src;
         sourceRoot = "${old.src.name}/spectre_oxi";
 
-        cargoHash = "sha256-seBq1zJNzNVfCQckIHq7rHI/Y8MyxP88cee3NO7NYgo=";
+        cargoHash = "sha256-7V4RyWIo9gL3ir4Pay8CMIVn6cXjJi9sgKVOENG4muQ=";
 
 
         preCheck = ''
@@ -1220,7 +1225,7 @@
         pname = "sg-nvim-rust";
         inherit (old) version src;
 
-        cargoHash = "sha256-iGNLk3ckm90i5m05V/va+hO9RMiOUKL19dkszoUCwlU=";
+        cargoHash = "sha256-bK4gyK6kqeRyoH7hnRHZURCjcxemIdqs71Qgb/Cl1pw=";
 
         nativeBuildInputs = [ pkg-config ];
 

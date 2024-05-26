@@ -2358,6 +2358,8 @@ self: super: with self; {
 
   collidoscope = callPackage ../development/python-modules/collidoscope { };
 
+  color-operations = callPackage ../development/python-modules/color-operations { };
+
   colorama = callPackage ../development/python-modules/colorama { };
 
   colorcet = callPackage ../development/python-modules/colorcet { };
@@ -3276,8 +3278,6 @@ self: super: with self; {
 
   django-ninja = callPackage ../development/python-modules/django-ninja { };
 
-  django-nose = callPackage ../development/python-modules/django-nose { };
-
   django-oauth-toolkit = callPackage ../development/python-modules/django-oauth-toolkit { };
 
   django-otp = callPackage ../development/python-modules/django-otp { };
@@ -3317,6 +3317,8 @@ self: super: with self; {
   djangoql = callPackage ../development/python-modules/djangoql { };
 
   django-ranged-response = callPackage ../development/python-modules/django-ranged-response { };
+
+  django-ratelimit = callPackage ../development/python-modules/django-ratelimit { };
 
   django-raster = callPackage ../development/python-modules/django-raster { };
 
@@ -4709,6 +4711,8 @@ self: super: with self; {
 
   geocoder = callPackage ../development/python-modules/geocoder { };
 
+  geodatasets = callPackage ../development/python-modules/geodatasets { };
+
   geographiclib = callPackage ../development/python-modules/geographiclib { };
 
   geoip2 = callPackage ../development/python-modules/geoip2 { };
@@ -6100,10 +6104,6 @@ self: super: with self; {
 
   joserfc = callPackage ../development/python-modules/joserfc { };
 
-  journalwatch = callPackage ../tools/system/journalwatch {
-    inherit (self) systemd pytest;
-  };
-
   jplephem = callPackage ../development/python-modules/jplephem { };
 
   jproperties = callPackage ../development/python-modules/jproperties { };
@@ -6692,6 +6692,8 @@ self: super: with self; {
 
   libpyfoscam = callPackage ../development/python-modules/libpyfoscam { };
 
+  libpysal = callPackage ../development/python-modules/libpysal { };
+
   libpyvivotek = callPackage ../development/python-modules/libpyvivotek { };
 
   libpwquality = lib.pipe pkgs.libpwquality [
@@ -7171,6 +7173,8 @@ self: super: with self; {
   mapbox = callPackage ../development/python-modules/mapbox { };
 
   mapbox-earcut = callPackage ../development/python-modules/mapbox-earcut { };
+
+  mapclassify = callPackage ../development/python-modules/mapclassify { };
 
   mariadb = callPackage ../development/python-modules/mariadb { };
 
@@ -7670,6 +7674,8 @@ self: super: with self; {
   more-itertools = callPackage ../development/python-modules/more-itertools { };
 
   more-properties = callPackage ../development/python-modules/more-properties { };
+
+  morecantile = callPackage ../development/python-modules/morecantile { };
 
   moreorless = callPackage ../development/python-modules/moreorless { };
 
@@ -8863,13 +8869,9 @@ self: super: with self; {
 
   nose3 = callPackage ../development/python-modules/nose3 { };
 
-  nose-exclude = callPackage ../development/python-modules/nose-exclude { };
-
   nose-timer = callPackage ../development/python-modules/nose-timer { };
 
   nose-pattern-exclude = callPackage ../development/python-modules/nose-pattern-exclude { };
-
-  nose-randomly = callPackage ../development/python-modules/nose-randomly { };
 
   nose-warnings-filters = callPackage ../development/python-modules/nose-warnings-filters { };
 
@@ -10000,6 +10002,8 @@ self: super: with self; {
 
   pynx584 = callPackage ../development/python-modules/pynx584 { };
 
+  pyogrio = callPackage ../development/python-modules/pyogrio { };
+
   pyorthanc = callPackage ../development/python-modules/pyorthanc { };
 
   pyoutbreaksnearme = callPackage ../development/python-modules/pyoutbreaksnearme { };
@@ -10024,6 +10028,8 @@ self: super: with self; {
 
   pyrogram = callPackage ../development/python-modules/pyrogram { };
 
+  pyrympro = callPackage ../development/python-modules/pyrympro { };
+
   pysabnzbd = callPackage ../development/python-modules/pysabnzbd { };
 
   pysbd = callPackage ../development/python-modules/pysbd { };
@@ -10047,6 +10053,8 @@ self: super: with self; {
   pyskyqremote = callPackage ../development/python-modules/pyskyqremote { };
 
   pysolcast = callPackage ../development/python-modules/pysolcast { };
+
+  pystac = callPackage ../development/python-modules/pystac { };
 
   pysubs2 = callPackage ../development/python-modules/pysubs2 { };
 
@@ -11049,8 +11057,6 @@ self: super: with self; {
   pygdbmi = callPackage ../development/python-modules/pygdbmi { };
 
   pygeoip = callPackage ../development/python-modules/pygeoip { };
-
-  pygeos = callPackage ../development/python-modules/pygeos { };
 
   pygetwindow = callPackage ../development/python-modules/pygetwindow { };
 
@@ -12661,6 +12667,8 @@ self: super: with self; {
 
   pytube = callPackage ../development/python-modules/pytube { };
 
+  pytubefix = callPackage ../development/python-modules/pytubefix { };
+
   pytun = callPackage ../development/python-modules/pytun { };
 
   pyturbojpeg = callPackage ../development/python-modules/pyturbojpeg { };
@@ -12786,7 +12794,7 @@ self: super: with self; {
   pywizlight = callPackage ../development/python-modules/pywizlight { };
 
   pywlroots = callPackage ../development/python-modules/pywlroots {
-    wlroots = pkgs.wlroots_0_16;
+    wlroots = pkgs.wlroots_0_17;
   };
 
   pyws66i = callPackage ../development/python-modules/pyws66i { };
@@ -12912,7 +12920,7 @@ self: super: with self; {
   qtconsole = callPackage ../development/python-modules/qtconsole { };
 
   qtile = callPackage ../development/python-modules/qtile {
-    wlroots = pkgs.wlroots_0_16;
+    wlroots = pkgs.wlroots_0_17;
   };
   qtile-extras = callPackage ../development/python-modules/qtile-extras { };
 
@@ -13031,6 +13039,8 @@ self: super: with self; {
   rawkit = callPackage ../development/python-modules/rawkit { };
 
   ray = callPackage ../development/python-modules/ray { };
+
+  raylib-python-cffi = callPackage ../development/python-modules/raylib-python-cffi {};
 
   razdel = callPackage ../development/python-modules/razdel { };
 
@@ -13282,6 +13292,10 @@ self: super: with self; {
   rich-rst = callPackage ../development/python-modules/rich-rst { };
 
   ring-doorbell = callPackage ../development/python-modules/ring-doorbell { };
+
+  rio-tiler = callPackage ../development/python-modules/rio-tiler { };
+
+  rioxarray = callPackage ../development/python-modules/rioxarray { };
 
   ripe-atlas-cousteau = callPackage ../development/python-modules/ripe-atlas-cousteau { };
 
@@ -13622,10 +13636,6 @@ self: super: with self; {
   scikit-rf = callPackage ../development/python-modules/scikit-rf { };
 
   scikits-odes = callPackage ../development/python-modules/scikits-odes { };
-
-  scikits-samplerate = callPackage ../development/python-modules/scikits-samplerate {
-    inherit (pkgs) libsamplerate;
-  };
 
   scikit-tda = callPackage ../development/python-modules/scikit-tda { };
 
@@ -14310,6 +14320,8 @@ self: super: with self; {
   sphinxcontrib-confluencebuilder = callPackage ../development/python-modules/sphinxcontrib-confluencebuilder { };
 
   sphinxcontrib-devhelp = callPackage ../development/python-modules/sphinxcontrib-devhelp { };
+
+  sphinxcontrib-ditaa = callPackage ../development/python-modules/sphinxcontrib-ditaa { };
 
   sphinxcontrib-excel-table = callPackage ../development/python-modules/sphinxcontrib-excel-table { };
 
@@ -16570,6 +16582,10 @@ self: super: with self; {
 
   utils = callPackage ../development/python-modules/utils { };
 
+  uv = toPythonModule (pkgs.uv.override {
+    python3Packages = self;
+  });
+
   uvcclient = callPackage ../development/python-modules/uvcclient { };
 
   uvicorn = callPackage ../development/python-modules/uvicorn { };
@@ -16684,6 +16700,8 @@ self: super: with self; {
 
   virtualenvwrapper = callPackage ../development/python-modules/virtualenvwrapper { };
 
+  visions = callPackage ../development/python-modules/visions { };
+
   visitor = callPackage ../development/python-modules/visitor { };
 
   vispy = callPackage ../development/python-modules/vispy { };
@@ -16699,6 +16717,8 @@ self: super: with self; {
   vmprof = callPackage ../development/python-modules/vmprof { };
 
   vncdo = callPackage ../development/python-modules/vncdo { };
+
+  vnoise = callPackage ../development/python-modules/vnoise { };
 
   vobject = callPackage ../development/python-modules/vobject { };
 
@@ -16833,6 +16853,8 @@ self: super: with self; {
   weasel = callPackage ../development/python-modules/weasel { };
 
   weasyprint = callPackage ../development/python-modules/weasyprint { };
+
+  weatherflow4py = callPackage ../development/python-modules/weatherflow4py { };
 
   weaviate-client = callPackage ../development/python-modules/weaviate-client { };
 
@@ -17210,6 +17232,8 @@ self: super: with self; {
   yattag = callPackage ../development/python-modules/yattag { };
 
   yacs = callPackage ../development/python-modules/yacs { };
+
+  ydata-profiling = callPackage ../development/python-modules/ydata-profiling { };
 
   ydiff = callPackage ../development/python-modules/ydiff { };
 
