@@ -12,13 +12,13 @@
 
 buildPythonApplication rec {
   pname = "git-machete";
-  version = "3.25.3";
+  version = "3.26.1";
 
   src = fetchFromGitHub {
     owner = "virtuslab";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-2XWQK0dXJeQJsB2FUsLoOA4SIoterb1WGXqYi1JHPQY=";
+    hash = "sha256-QcsBe1v2qiPR7svl5mQ/aro/X2PbpkJHNHnNAnQE9yA=";
   };
 
   nativeBuildInputs = [ installShellFiles ];

@@ -21,9 +21,8 @@ let
     name = "cudatoolkit-joined-${cudaPackages.cudaVersion}";
     paths = with cudaPackages; [
       cuda_cccl # <nv/target>
-      cuda_cccl.dev
       cuda_cudart
-      cuda_nvcc.dev # <crt/host_defines.h>
+      cuda_nvcc # <crt/host_defines.h>
       cuda_nvprof
       cuda_nvrtc
       cuda_nvtx
@@ -103,7 +102,7 @@ buildPythonPackage rec {
   enableParallelBuilding = true;
 
   meta = with lib; {
-    description = "A NumPy-compatible matrix library accelerated by CUDA";
+    description = "NumPy-compatible matrix library accelerated by CUDA";
     homepage = "https://cupy.chainer.org/";
     changelog = "https://github.com/cupy/cupy/releases/tag/v${version}";
     license = licenses.mit;

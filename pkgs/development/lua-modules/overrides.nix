@@ -54,13 +54,15 @@
 , vimPlugins
 , vimUtils
 , yajl
+, zip
+, unzip
 , zlib
 , zziplib
 }:
 
 final: prev:
 let
-  inherit (prev) luaOlder luaAtLeast lua isLuaJIT;
+  inherit (prev) luaOlder luaAtLeast lua isLuaJIT isLua51;
 in
 {
   argparse = prev.argparse.overrideAttrs(oa: {
@@ -324,11 +326,15 @@ in
     '';
   });
 
+  lua-resty-jwt = prev.lua-resty-jwt.overrideAttrs(oa: {
+    meta = oa.meta // { broken = true; };
+  });
+
   lua-zlib = prev.lua-zlib.overrideAttrs (oa: {
     buildInputs = oa.buildInputs ++ [
       zlib.dev
     ];
-    meta.broken = luaOlder "5.1" || luaAtLeast "5.4";
+    meta = oa.meta // { broken = luaOlder "5.1" || luaAtLeast "5.4"; };
   });
 
   luadbi-mysql = prev.luadbi-mysql.overrideAttrs (oa: {
@@ -405,6 +411,40 @@ in
     externalDeps = [
       { name = "CRYPT"; dep = libxcrypt; }
     ];
+  });
+
+  luaprompt = prev.luaprompt.overrideAttrs (_: {
+    externalDeps = [
+      { name = "READLINE"; dep = readline; }
+      { name = "HISTORY"; dep = readline; }
+    ];
+  });
+
+  # As a nix user, use this derivation instead of "luarocks_bootstrap"
+  luarocks = prev.luarocks.overrideAttrs (oa: {
+
+    nativeBuildInputs = oa.nativeBuildInputs ++ [ installShellFiles lua unzip ];
+    # cmake is just to compile packages with "cmake" buildType, not luarocks itself
+    dontUseCmakeConfigure = true;
+
+    propagatedBuildInputs = [ zip unzip cmake ];
+
+    postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
+      installShellCompletion --cmd luarocks \
+        --bash <($out/bin/luarocks completion bash) \
+        --fish <($out/bin/luarocks completion fish) \
+        --zsh <($out/bin/luarocks completion zsh)
+
+      installShellCompletion --cmd luarocks-admin \
+        --bash <($out/bin/luarocks-admin completion bash) \
+        --fish <($out/bin/luarocks-admin completion fish) \
+        --zsh <($out/bin/luarocks-admin completion zsh)
+    '';
+
+    meta = oa.meta // {
+      mainProgram = "luarocks";
+    };
+
   });
 
   luasec = prev.luasec.overrideAttrs (oa: {
@@ -492,6 +532,39 @@ in
       broken = luaOlder "5.1" || (luaAtLeast "5.4");
       platforms = lib.platforms.linux;
     };
+  });
+
+  lz-n  = prev.lz-n.overrideAttrs(oa: {
+    doCheck = lua.luaversion == "5.1";
+    nativeCheckInputs = [ final.nlua final.busted ];
+    checkPhase = ''
+      runHook preCheck
+      export HOME=$(mktemp -d)
+      busted --lua=nlua
+      runHook postCheck
+      '';
+  });
+
+  neotest  = prev.neotest.overrideAttrs(oa: {
+    # A few tests fail for strange reasons on darwin
+    doCheck = !stdenv.isDarwin;
+    nativeCheckInputs = oa.nativeCheckInputs ++ [
+      final.nlua final.busted neovim-unwrapped
+    ];
+
+    # stick to neovim's lua version else loading shared libraries fail
+    meta = oa.meta // { broken = !isLua51; };
+
+    checkPhase = ''
+      runHook preCheck
+      export HOME=$(mktemp -d)
+      export LUA_PATH="./lua/?.lua;./lua/?/init.lua;$LUA_PATH"
+      nvim --headless -i NONE \
+        --cmd "set rtp+=${vimPlugins.plenary-nvim}" \
+        -c "PlenaryBustedDirectory tests/ {}"
+
+      runHook postCheck
+      '';
   });
 
   haskell-tools-nvim  = prev.haskell-tools-nvim.overrideAttrs(oa: {
@@ -678,9 +751,15 @@ in
     doCheck = true;
     nativeCheckInputs = [ final.plenary-nvim neovim-unwrapped ];
 
+    # the plugin loads the library from either the LIBSQLITE env
+    # or the vim.g.sqlite_clib_path variable.
+    postPatch = ''
+      substituteInPlace lua/sqlite/defs.lua \
+        --replace-fail "path = vim.g.sqlite_clib_path" 'path = vim.g.sqlite_clib_path or  "${sqlite.out}/lib/libsqlite3${stdenv.hostPlatform.extensions.sharedLibrary}"'
+    '';
+
     # we override 'luarocks test' because otherwise neovim doesn't find/load the plenary plugin
     checkPhase = ''
-      export LIBSQLITE="${sqlite.out}/lib/libsqlite3${stdenv.hostPlatform.extensions.sharedLibrary}"
       export HOME="$TMPDIR";
 
       nvim --headless -i NONE \
@@ -710,21 +789,6 @@ in
       hash = "sha256-YApsOGfAw34zp069lyGR6FGjxty1bE23+Tic07f8zI4=";
     };
     nativeBuildInputs = oa.nativeBuildInputs ++ [ cargo rustPlatform.cargoSetupHook ];
-  });
-
-  toml = prev.toml.overrideAttrs (oa: {
-    patches = [ ./toml.patch ];
-
-    nativeBuildInputs = oa.nativeBuildInputs ++ [ tomlplusplus ];
-    propagatedBuildInputs = oa.propagatedBuildInputs ++ [ sol2 ];
-
-    postPatch = ''
-      substituteInPlace CMakeLists.txt \
-        --replace-fail "TOML_PLUS_PLUS_SRC" "${tomlplusplus.src}/include/toml++" \
-        --replace-fail "MAGIC_ENUM_SRC" "${magic-enum.src}/include/magic_enum"
-
-      cat CMakeLists.txt
-    '';
   });
 
   toml-edit = prev.toml-edit.overrideAttrs (oa: {

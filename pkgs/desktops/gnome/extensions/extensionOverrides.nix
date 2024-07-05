@@ -3,7 +3,7 @@
 , easyeffects
 , gjs
 , glib
-, gnome
+, nautilus
 , gobject-introspection
 , gsound
 , hddtemp
@@ -15,8 +15,6 @@
 , netcat-gnu
 , nvme-cli
 , procps
-, pulseaudio
-, python3
 , smartmontools
 , substituteAll
 , touchegg
@@ -56,10 +54,17 @@ super: lib.trivial.pipe super [
   }))
 
   (patchExtension "display-brightness-ddcutil@themightydeity.github.com" (old: {
+    # Make glib-compile-schemas available
+    nativeBuildInputs = [ glib ];
     # Has a hard-coded path to a run-time dependency
     # https://github.com/NixOS/nixpkgs/issues/136111
     postPatch = ''
-      substituteInPlace "extension.js" --replace "/usr/bin/ddcutil" "${ddcutil}/bin/ddcutil"
+      substituteInPlace "schemas/org.gnome.shell.extensions.display-brightness-ddcutil.gschema.xml" \
+        --replace-fail "/usr/bin/ddcutil" ${lib.getExe ddcutil}
+    '';
+    postFixup = ''
+      rm "$out/share/gnome-shell/extensions/display-brightness-ddcutil@themightydeity.github.com/schemas/gschemas.compiled"
+      glib-compile-schemas "$out/share/gnome-shell/extensions/display-brightness-ddcutil@themightydeity.github.com/schemas"
     '';
   }))
 
@@ -102,16 +107,8 @@ super: lib.trivial.pipe super [
         util_linux = util-linux;
         xdg_utils = xdg-utils;
         src = ./extensionOverridesPatches/gtk4-ding_at_smedius.gitlab.com.patch;
-        nautilus_gsettings_path = "${glib.getSchemaPath gnome.nautilus}";
+        nautilus_gsettings_path = "${glib.getSchemaPath nautilus}";
       })
-    ];
-  }))
-
-  (patchExtension "mullvadindicator@pobega.github.com" (old: {
-    patches = [
-      # Patch from https://github.com/Pobega/gnome-shell-extension-mullvad-indicator/pull/36
-      # tweaked to drop the Makefile changes to fix application
-      ./extensionOverridesPatches/mullvadindicator_at_pobega.github.com.patch
     ];
   }))
 
@@ -120,6 +117,15 @@ super: lib.trivial.pipe super [
       (substituteAll {
         src = ./extensionOverridesPatches/pano_at_elhan.io.patch;
         inherit gsound libgda;
+      })
+    ];
+  }))
+
+  (patchExtension "system-monitor@gnome-shell-extensions.gcampax.github.com" (old: {
+    patches = [
+      (substituteAll {
+        src = ./extensionOverridesPatches/system-monitor_at_gnome-shell-extensions.gcampax.github.com.patch;
+        gtop_path = "${libgtop}/lib/girepository-1.0";
       })
     ];
   }))

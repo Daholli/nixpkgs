@@ -14,24 +14,24 @@
 
 stdenv.mkDerivation rec {
   pname = "drawio";
-  version = "24.4.0";
+  version = "24.6.4";
 
   src = fetchFromGitHub {
     owner = "jgraph";
     repo = "drawio-desktop";
     rev = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-x+9e0DPvYuxFqZAuCuzndz2E1iKdsmtN9WGUQPc9/uM=";
+    hash = "sha256-6+a+70uN4Tk4pMXg3DQ3D0GcLNGFQEcPG05xxyUv1DQ=";
   };
 
   # `@electron/fuses` tries to run `codesign` and fails. Disable and use autoSignDarwinBinariesHook instead
   postPatch = ''
-    sed -i -e 's/resetAdHocDarwinSignature:.*/resetAdHocDarwinSignature: false,/' build/fuses.js
+    sed -i -e 's/resetAdHocDarwinSignature:.*/resetAdHocDarwinSignature: false,/' build/fuses.cjs
   '';
 
   offlineCache = fetchYarnDeps {
     yarnLock = src + "/yarn.lock";
-    hash = "sha256-OL4AcV8Fy25liRn4oVTLjUKyIuDKBsXHyN5RG3qexu4=";
+    hash = "sha256-R8eCnp/ik3EfsmsVyJfLjyScUVQSm/EdXJesS/eVIX0=";
   };
 
   nativeBuildInputs = [
@@ -114,7 +114,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with lib; {
-    description = "A desktop application for creating diagrams";
+    description = "Desktop application for creating diagrams";
     homepage = "https://about.draw.io/";
     license = licenses.asl20;
     changelog = "https://github.com/jgraph/drawio-desktop/releases/tag/v${version}";

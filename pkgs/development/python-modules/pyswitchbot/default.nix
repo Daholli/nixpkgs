@@ -15,7 +15,7 @@
 
 buildPythonPackage rec {
   pname = "pyswitchbot";
-  version = "0.46.1";
+  version = "0.48.0";
   pyproject = true;
 
   disabled = pythonOlder "3.8";
@@ -24,7 +24,7 @@ buildPythonPackage rec {
     owner = "Danielhiversen";
     repo = "pySwitchbot";
     rev = "refs/tags/${version}";
-    hash = "sha256-fiWjChr7NATkO6jNBlt5kqxaLSSZWcdd7TjQwMP6klY=";
+    hash = "sha256-UVLB1SdtYiMsXR3od2gIxNxiQ6wyW2ItAJQrxv0w1tk=";
   };
 
   build-system = [ setuptools ];

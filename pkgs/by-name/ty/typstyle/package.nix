@@ -6,20 +6,23 @@
 , zlib
 , stdenv
 , darwin
+, nix-update-script
+, testers
+, typstyle
 }:
 
 rustPlatform.buildRustPackage rec {
   pname = "typstyle";
-  version = "0.11.23";
+  version = "0.11.28";
 
   src = fetchFromGitHub {
     owner = "Enter-tainer";
     repo = "typstyle";
     rev = "refs/tags/v${version}";
-    hash = "sha256-42wpXEQdvVgN4aIXUp/t1jnPxqOW9ChxD0YB07PGE5o=";
+    hash = "sha256-U3A3ye45o8q+Kvv2lJqJ72Vn/Q9iPgUkwpA79DAHU2k=";
   };
 
-  cargoHash = "sha256-Zp094Hs3850foQ1oGz56qEHY1dDIkXS+iDC7hJlOET0=";
+  cargoHash = "sha256-A13nVLvjhoAPGIXfQX6AE+zMuvT7QT7BWJVS6ASnw10=";
 
   nativeBuildInputs = [
     pkg-config
@@ -39,6 +42,11 @@ rustPlatform.buildRustPackage rec {
   checkFlags = [
     "--skip=e2e"
   ];
+
+  passthru = {
+    updateScript = nix-update-script { };
+    tests.version = testers.testVersion { package = typstyle; };
+  };
 
   meta = {
     changelog = "https://github.com/Enter-tainer/typstyle/blob/${src.rev}/CHANGELOG.md";

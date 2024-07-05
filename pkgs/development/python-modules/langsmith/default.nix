@@ -4,6 +4,7 @@
   anthropic,
   attr,
   buildPythonPackage,
+  dataclasses-json,
   fastapi,
   fetchFromGitHub,
   freezegun,
@@ -22,7 +23,7 @@
 
 buildPythonPackage rec {
   pname = "langsmith";
-  version = "0.1.63";
+  version = "0.1.77";
   pyproject = true;
 
   disabled = pythonOlder "3.8";
@@ -31,17 +32,16 @@ buildPythonPackage rec {
     owner = "langchain-ai";
     repo = "langsmith-sdk";
     rev = "refs/tags/v${version}";
-    hash = "sha256-zIrSQubYB5AuwAF0hktT/wY5/ktwQJ4Z/3F6po2wC3o=";
+    hash = "sha256-Tkqo0BbBqFMsEDtEo0sVgSQOoa/J+ECw/7T7yALnL84=";
   };
 
   sourceRoot = "${src.name}/python";
 
   pythonRelaxDeps = [ "orjson" ];
 
-  build-system = [
-    poetry-core
-    pythonRelaxDepsHook
-  ];
+  build-system = [ poetry-core ];
+
+  nativeBuildInputs = [ pythonRelaxDepsHook ];
 
   dependencies = [
     orjson
@@ -51,6 +51,7 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [
     anthropic
+    dataclasses-json
     fastapi
     freezegun
     httpx

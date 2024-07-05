@@ -2,13 +2,13 @@
 
 buildGoModule rec {
   pname = "kyverno";
-  version = "1.12.2";
+  version = "1.12.4";
 
   src = fetchFromGitHub {
     owner = "kyverno";
     repo = "kyverno";
     rev = "v${version}";
-    hash = "sha256-gR/gpoldtwW0bVjWr5xwbfcKb6VJ43otWnSFrcYerII=";
+    hash = "sha256-TVtE1mdOai2G2+KCp9r5G+E9QhGQ5TmUFCN9x5EKM7o=";
   };
 
   ldflags = [

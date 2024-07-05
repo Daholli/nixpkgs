@@ -11,19 +11,19 @@
 
 buildGoModule rec {
   pname = "trivy";
-  version = "0.51.4";
+  version = "0.53.0";
 
   src = fetchFromGitHub {
     owner = "aquasecurity";
     repo = "trivy";
     rev = "refs/tags/v${version}";
-    hash = "sha256-f7qWD63dvKGnwGmeENPjtqvpRgq06MkLCQ0MVgsLJRw=";
+    hash = "sha256-DzCPJU99cLDnVGsFImy2lQX2WBXXMaiF3dM8P/ZIdvA=";
   };
 
   # Hash mismatch on across Linux and Darwin
   proxyVendor = true;
 
-  vendorHash = "sha256-U1HkIBHoZVrisTbVRqqP/B9idZ9G3KsCGLSVBbBV7lE=";
+  vendorHash = "sha256-QRdXhISiTVFWn54qYT+0hXMr2RYkRAV29HFv3zUPeHE=";
 
   subPackages = [ "cmd/trivy" ];
 
@@ -64,7 +64,7 @@ buildGoModule rec {
   meta = with lib; {
     homepage = "https://github.com/aquasecurity/trivy";
     changelog = "https://github.com/aquasecurity/trivy/releases/tag/v${version}";
-    description = "A simple and comprehensive vulnerability scanner for containers, suitable for CI";
+    description = "Simple and comprehensive vulnerability scanner for containers, suitable for CI";
     longDescription = ''
       Trivy is a simple and comprehensive vulnerability scanner for containers
       and other artifacts. A software vulnerability is a glitch, flaw, or

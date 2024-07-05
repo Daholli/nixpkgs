@@ -69,9 +69,9 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "An email client for your terminal";
+    description = "Email client for your terminal";
     homepage = "https://aerc-mail.org/";
-    maintainers = with maintainers; [ tadeokondrak ];
+    maintainers = with maintainers; [ ];
     mainProgram = "aerc";
     license = licenses.mit;
     platforms = platforms.unix;

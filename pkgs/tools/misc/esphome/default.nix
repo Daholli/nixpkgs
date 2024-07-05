@@ -19,14 +19,14 @@ let
 in
 python.pkgs.buildPythonApplication rec {
   pname = "esphome";
-  version = "2024.5.3";
+  version = "2024.6.6";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = pname;
     repo = pname;
     rev = "refs/tags/${version}";
-    hash = "sha256-iIkAVXyyHVmA3AK4JwuAA9483WOgLvDmOGzRA4MxPtE=";
+    hash = "sha256-/EGj6kEgUhQefdFz/IllKWeVGLhC3STiOOsy3Pq4pIM=";
   };
 
   nativeBuildInputs = with python.pkgs; [
@@ -38,9 +38,17 @@ python.pkgs.buildPythonApplication rec {
 
   pythonRelaxDeps = true;
 
+  pythonRemoveDeps = [
+    "esptool"
+    "platformio"
+  ];
+
   postPatch = ''
+    substituteInPlace pyproject.toml \
+      --replace-fail "setuptools==" "setuptools>="
+
     # drop coverage testing
-    sed -i '/--cov/d' pytest.ini
+    sed -i '/--cov/d' pyproject.toml
 
     # ensure component dependencies are available
     cat requirements_optional.txt >> requirements.txt

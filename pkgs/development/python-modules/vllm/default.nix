@@ -100,9 +100,9 @@ buildPythonPackage rec {
       with cudaPackages;
       [
         cuda_cudart # cuda_runtime.h, -lcudart
-        cuda_cccl.dev # <thrust/*>
-        libcusparse.dev # cusparse.h
-        libcublas.dev # cublas_v2.h
+        cuda_cccl # <thrust/*>
+        libcusparse # cusparse.h
+        libcublas # cublas_v2.h
         libcusolver # cusolverDn.h
       ]
     ))
@@ -144,7 +144,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "vllm" ];
 
   meta = with lib; {
-    description = "A high-throughput and memory-efficient inference and serving engine for LLMs";
+    description = "High-throughput and memory-efficient inference and serving engine for LLMs";
     changelog = "https://github.com/vllm-project/vllm/releases/tag/v${version}";
     homepage = "https://github.com/vllm-project/vllm";
     license = licenses.asl20;

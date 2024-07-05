@@ -1,13 +1,13 @@
 { lib, buildNpmPackage, fetchFromGitHub, runCommand, jq }:
 
 let
-  version = "1.1.364";
+  version = "1.1.369";
 
   src = fetchFromGitHub {
     owner = "Microsoft";
     repo = "pyright";
     rev = "${version}";
-    hash = "sha256-7XQ/DGba00sEg/DxcKuX2ehc4V96557yvtGXFFyHD74=";
+    hash = "sha256-YAv+2QiArHoZrLNisCFaBNhqQm5uHJdtil0w4xtLl4k=";
   };
 
   patchedPackageJSON = runCommand "package.json" { } ''
@@ -37,7 +37,7 @@ let
     pname = "pyright-internal";
     inherit version src;
     sourceRoot = "${src.name}/packages/pyright-internal";
-    npmDepsHash = "sha256-ce3338ugei4R7CYKn3676ijpgYKcuyY8CgkWbf8unKw=";
+    npmDepsHash = "sha256-xnS7guT8E/wHk3d2ESve4HgMPfH/NuP5TsnsGlvQtUI=";
     dontNpmBuild = true;
     installPhase = ''
       runHook preInstall
@@ -51,7 +51,7 @@ buildNpmPackage rec {
   inherit version src;
 
   sourceRoot = "${src.name}/packages/pyright";
-  npmDepsHash = "sha256-E6txhG+1DNcAR9Nia8ggWL0tDaTXs9sF4je5nDqroys=";
+  npmDepsHash = "sha256-ijG0thy0YPPrgMYCJrRqIXkexuHVKcXX7PxPpCJbsg8=";
 
   postPatch = ''
     chmod +w ../../
