@@ -32,13 +32,13 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "gitbutler";
-  version = "0.19.7";
+  version = "0.20.0";
 
   src = fetchFromGitHub {
     owner = "gitbutlerapp";
     repo = "gitbutler";
     tag = "release/${finalAttrs.version}";
-    hash = "sha256-ppl1noikPwTvG/XT7iYG41+9ZZO8i0x2L+odeEzRP1s=";
+    hash = "sha256-S9lBnd3zhWi+0oLutujud5GyI0W+AHKvZpNvRWD2WXU=";
   };
 
   # Let Tauri know what version we're building and deactivate the built-in updater
@@ -56,13 +56,13 @@ rustPlatform.buildRustPackage (finalAttrs: {
       --replace-fail 'checkUpdate = tauriCheck;' 'checkUpdate = () => null;'
   '';
 
-  cargoHash = "sha256-xW/eO+AQQUBN2MrixNx3LKhwMookkKuX5LF4DSWQKKY=";
+  cargoHash = "sha256-faG1Y+5dd3BrLWIWF5ZUxXSAzd5wqbyj7/vxEHUAfjs=";
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 3;
-    hash = "sha256-eRiFA5lXpPHQwlyFmKMx1zmHH2zLCHB+3s708g6srg4=";
+    hash = "sha256-SHYJCnKOP9MZy9BY/ctqDzGkah7UI8bj+RTGZhTfq8E=";
   };
 
   nativeBuildInputs = [
